@@ -23,7 +23,6 @@ func (c *Connection) Channel() (*Channel, error) {
 	}
 
 	channel := &Channel{
-		conn:    c,
 		Channel: ch,
 	}
 
@@ -102,7 +101,6 @@ func Dial(url string) (*Connection, error) {
 
 // Channel amqp.Channel wapper
 type Channel struct {
-	conn *Connection
 	*amqp.Channel
 	closed int32
 }
