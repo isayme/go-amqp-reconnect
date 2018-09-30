@@ -8,6 +8,8 @@ import (
 	"github.com/streadway/amqp"
 )
 
+const delay = 3 // reconnect after delay seconds
+
 // Connection amqp.Connection wrapper
 type Connection struct {
 	*amqp.Connection
@@ -39,7 +41,7 @@ func (c *Connection) Channel() (*Channel, error) {
 			// reconnect if not closed by developer
 			for {
 				// wait 1s for connection reconnect
-				time.Sleep(time.Second)
+				time.Sleep(delay * time.Second)
 
 				ch, err := c.Connection.Channel()
 				if err == nil {
@@ -80,7 +82,7 @@ func Dial(url string) (*Connection, error) {
 			// reconnect if not closed by developer
 			for {
 				// wait 1s for reconnect
-				time.Sleep(time.Second)
+				time.Sleep(delay * time.Second)
 
 				conn, err := amqp.Dial(url)
 				if err == nil {
@@ -129,7 +131,7 @@ func (ch *Channel) Consume(queue, consumer string, autoAck, exclusive, noLocal, 
 			d, err := ch.Channel.Consume(queue, consumer, autoAck, exclusive, noLocal, noWait, args)
 			if err != nil {
 				debugf("consume failed, err: %v", err)
-				time.Sleep(time.Second)
+				time.Sleep(delay * time.Second)
 				continue
 			}
 
@@ -138,7 +140,7 @@ func (ch *Channel) Consume(queue, consumer string, autoAck, exclusive, noLocal, 
 			}
 
 			// sleep before IsClose call. closed flag may not set before sleep.
-			time.Sleep(time.Second)
+			time.Sleep(delay * time.Second)
 
 			if ch.IsClosed() {
 				break
