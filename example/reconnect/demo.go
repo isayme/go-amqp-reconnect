@@ -64,6 +64,7 @@ func main() {
 
 		for msg := range d {
 			log.Printf("msg: %s", string(msg.Body))
+			msg.Ack(true)
 		}
 	}()
 

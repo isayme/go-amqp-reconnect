@@ -4,7 +4,6 @@ import (
 	"log"
 	"time"
 
-	"code.teambition.com/soa/go-lib/pkg/ilog"
 	"github.com/streadway/amqp"
 
 	"github.com/isayme/go-amqp-reconnect/rabbitmq"
@@ -69,10 +68,10 @@ func main() {
 	}()
 
 	time.Sleep(5 * time.Second)
-	ilog.Info(consumeCh.Close())
+	log.Print(consumeCh.Close())
 
 	time.Sleep(5 * time.Second)
-	ilog.Info(conn.Close())
+	log.Print(conn.Close())
 
 	time.Sleep(10 * time.Second)
 }
