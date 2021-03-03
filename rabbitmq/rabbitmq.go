@@ -121,7 +121,7 @@ func (ch *Channel) Close() error {
 	return ch.Channel.Close()
 }
 
-// Consume warp amqp.Channel.Consume, the returned delivery will end only when channel closed by developer
+// Consume wrap amqp.Channel.Consume, the returned delivery will end only when channel closed by developer
 func (ch *Channel) Consume(queue, consumer string, autoAck, exclusive, noLocal, noWait bool, args amqp.Table) (<-chan amqp.Delivery, error) {
 	deliveries := make(chan amqp.Delivery)
 
