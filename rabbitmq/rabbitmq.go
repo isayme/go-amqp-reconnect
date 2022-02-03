@@ -39,7 +39,7 @@ func (c *Connection) Channel() (*Channel, error) {
 
 			// reconnect if not closed by developer
 			for {
-				// wait 1s for connection reconnect
+				// wait 3s for connection reconnect
 				time.Sleep(delay * time.Second)
 
 				ch, err := c.Connection.Channel()
@@ -105,7 +105,7 @@ func reDialIfDisconnect(connection *Connection, dial func() (*amqp.Connection, e
 
 		// reconnect if not closed by developer
 		for {
-			// wait 1s for reconnect
+			// wait 3s for reconnect
 			time.Sleep(delay * time.Second)
 
 			conn, err := dial()
